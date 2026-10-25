@@ -56,8 +56,9 @@ export class FeedsService implements OnModuleInit, OnModuleDestroy {
   private satelliteError: string | null = null;
   private refreshTimer: NodeJS.Timeout | null = null;
 
-  async onModuleInit() {
-    await this.refreshSatellites();
+  onModuleInit() {
+    // Never hold start-up on CelesTrak: the loop runs fine with zero live satellites.
+    void this.refreshSatellites();
     this.refreshTimer = setInterval(() => void this.refreshSatellites(), TLE_MAX_AGE_MS);
   }
 

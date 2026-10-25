@@ -69,7 +69,7 @@ Poll groups (in `server/src/feeds/flights.ts`):
 
 | id | receivers | adsb.lol point | OpenSky box |
 |---|---|---|---|
-| `europe` | london-west, paris-nord | 50.30, 1.19, 250 nm | lamin 47.0, lamax 53.5, lomin −3.5, lomax 5.0 |
+| `europe` | london-west, paris-nord | 50.30, 1.19, 250 nm | lamin 48.3, lamax 52.6, lomin −1.5, lomax 4.2 |
 | `tunis` | tunis | 36.87, 10.30, 160 nm | lamin 35.0, lamax 38.7, lomin 7.8, lomax 12.8 |
 
 Unit conversions (pinned): 1 ft = 0.3048 m, 1 kt = 0.514444 m/s.

@@ -27,7 +27,7 @@ export function Dashboard({ snapshot, onFlyTo, send }: Props) {
   return (
     <aside className="dashboard" aria-label="Beam Control dashboard">
       <section className="card">
-        <h2>Receivers</h2>
+        <h2>Receivers (SIMULATED)</h2>
         {receivers.map((r) => {
           const pct = r.capacityMW ? (100 * r.deliveredMW) / r.capacityMW : 0;
           return (

@@ -48,6 +48,8 @@ export async function loadTle({ fetchText, readCache, writeCache, cacheAgeMs, ma
   }
   try {
     const text = await fetchText();
+    // A 200 that isn't TLE (captive portal, error page) must not replace a good cache.
+    if (!parseTle(text).length) throw new Error('response held no TLE sets');
     await writeCache(text);
     return { text, fromCache: false, error: null as string | null };
   } catch (error) {

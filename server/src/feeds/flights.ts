@@ -28,7 +28,8 @@ export const POLL_GROUPS: readonly PollGroup[] = Object.freeze([
     id: 'europe',
     receiverIds: ['london-west', 'paris-nord'],
     point: { lat: 50.3, lon: 1.19, radiusNm: 250 },
-    box: { lamin: 47.0, lamax: 53.5, lomin: -3.5, lomax: 5.0 },
+    // Under 25 square degrees, so one OpenSky credit per request.
+    box: { lamin: 48.3, lamax: 52.6, lomin: -1.5, lomax: 4.2 },
   },
   {
     id: 'tunis',

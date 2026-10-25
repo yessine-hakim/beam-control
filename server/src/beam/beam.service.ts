@@ -159,7 +159,7 @@ export class BeamService implements OnModuleInit, OnModuleDestroy {
           }),
           metrics: this.controller.getMetrics(),
           log: this.controller.getLog().slice(-8),
-          feed: { ...this.feed, error: this.feed.error, flights: aircraft.length, satellites: satellites.length },
+          feed: { ...this.feed, flights: aircraft.length, satellites: satellites.length },
           aircraft: this.feed.live ? this.tracker.aircraft(nowMs) : [],
           powerSats: this.constellation.flatMap((s) => {
             const position = satellitePositionEcef(s, new Date(nowMs));
@@ -171,8 +171,9 @@ export class BeamService implements OnModuleInit, OnModuleDestroy {
       },
       (error) => {
         this.tickError = error instanceof Error ? error.message : String(error);
-        this.feed = { ...this.feed, error: `tick failed: ${this.tickError}` };
         this.logger.error(`Tick failed: ${this.tickError}`);
+        // Screens must not look healthy while frozen: re-send the last state flagged.
+        if (this.wire) this.snapshot$.next({ ...this.wire, feed: { ...this.wire.feed, error: `tick failed: ${this.tickError}` } });
       },
     );
   }

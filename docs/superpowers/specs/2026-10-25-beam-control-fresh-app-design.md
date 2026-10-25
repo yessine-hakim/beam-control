@@ -4,11 +4,11 @@ Date: 2026-10-25 · Pitch: 25 Oct 2026, 09:00 (Tunis time; 08:00 UK) · Author: 
 
 ## Intent and why
 
-Beam Control is "air traffic control for space-based solar power". It has already been built and demoed as a layer inside a fork of another open-source globe app: a spy-style OSINT globe with dozens of unrelated layers. There, the jury sees someone else's product with a feature bolted on.
+Beam Control is "air traffic control for space-based solar power". It was first prototyped as a layer inside a large general-purpose globe app with dozens of unrelated layers, where it read as a feature rather than a product.
 
 This project rebuilds Beam Control as **its own product from the first screen**, with an architecture that matches the claim: the safety loop runs on a **server**, around the clock, for every receiver, and every screen is only a viewer. It keeps the safety logic, the live data and the demo story, and leaves everything else behind. No code from the old app is copied, so nothing of it needs crediting. Credits list only what the new app really uses.
 
-Success, in your words: the jury should see Beam Control as your product, not a spy app with your feature added. The stack should be solid and scalable, and defensible in Q&A.
+Success, in your words: the jury should see Beam Control as your own product. The stack should be solid and scalable, and defensible in Q&A.
 
 ## Goals
 

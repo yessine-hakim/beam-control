@@ -37,9 +37,9 @@ test('tle cache: fresh cache skips fetch; stale + fetch fail serves stale; nothi
   assert.deepEqual(fresh, { text: 'CACHED', fromCache: true, error: null });
   assert.equal(fetches, 0);
 
-  const refreshed = await loadTle({ ...base, cacheAgeMs: async () => 3 * 3600_000, fetchText: async () => 'NEW' });
-  assert.deepEqual(refreshed, { text: 'NEW', fromCache: false, error: null });
-  assert.equal(written, 'NEW');
+  const refreshed = await loadTle({ ...base, cacheAgeMs: async () => 3 * 3600_000, fetchText: async () => ISS });
+  assert.deepEqual(refreshed, { text: ISS, fromCache: false, error: null });
+  assert.equal(written, ISS);
 
   const stale = await loadTle({
     ...base,
@@ -84,4 +84,20 @@ test('tle cache remembers a failed download so restarts do not re-ask CelesTrak'
   const second = await loadTle(sources);
   assert.equal(fetches, 1, 'the second start within 2 h does not fetch again');
   assert.equal(second.text, '');
+});
+
+test('a 200 response without TLE sets (captive portal) keeps the stale cache', async () => {
+  let cache: string | null = ISS;
+  const result = await loadTle({
+    readCache: async () => cache,
+    writeCache: async (text: string) => {
+      cache = text;
+    },
+    cacheAgeMs: async () => 3 * 3600_000,
+    fetchText: async () => '<html><body>Please sign in to the venue Wi-Fi</body></html>',
+  });
+  assert.equal(result.text, ISS);
+  assert.equal(result.fromCache, true);
+  assert.match(result.error ?? '', /no TLE/);
+  assert.equal(cache, ISS, 'the good cache is not overwritten');
 });

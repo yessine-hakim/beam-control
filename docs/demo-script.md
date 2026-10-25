@@ -5,10 +5,11 @@ Five minutes, demo included. Then five minutes of Q&A.
 ## Before you go on stage
 
 1. `npm run dev` in the repo, open http://localhost:5173 in a fresh window, full screen (F11).
-2. Wait for **Connected** (top right) and the fly-in to London West, with an orange beam rising from the receiver.
-3. Keep **Live feed** off until just before your demo slot; the free feeds have a daily limit.
-4. If the venue Wi-Fi drops, the drill still works: the server runs locally.
-5. Backup: a screen recording of one live handoff on the laptop.
+2. Wait for **Connected** (top right) and the fly-in to London West, with an orange beam rising from the receiver. Check the Live traffic card shows a non-zero satellite count on the venue network.
+3. Rehearse **Run drill** twice, so you have seen both outcomes (handoff, or dim-and-restore).
+4. Keep **Live feed** off until just before your demo slot; the free feeds have a daily limit.
+5. If the venue Wi-Fi drops, the drill still works: the server runs locally.
+6. Backup: a screen recording of one live handoff on the laptop.
 
 ## Pitch beats (about 3 min talk + 90 s demo)
 
@@ -21,7 +22,7 @@ Five minutes, demo included. Then five minutes of Q&A.
 | Demo 1 | "This is London West, a simulated receiver in busy London airspace. The orange line is its beam from simulated power satellite PWR-xx. The server is watching all three receivers, live, every second." | Globe + Receivers card |
 | Demo 2 | "Switch the live feed on: these are real aircraft right now." | **Live feed** on |
 | Demo 3 | "Operators rehearse with a drill, a simulated intruder clearly labelled as such. The path turns red, with a countdown to contact." | **Run drill** |
-| Demo 4 | "Beam Control has already handed the receiver to another satellite. The meter stays at 200 MW." | Meter, log |
+| Demo 4 | Usually: "Beam Control has already handed the receiver to another satellite. The meter stays at 200 MW." About 1 drill in 5 there is no clean satellite at that moment: "No clean satellite right now, so it dims before contact and restores afterwards. Safety beats delivery." Contacts stay 0 either way. | Meter, log |
 | Demo 5 | "Every decision is in an append-only audit log a regulator can read. Contacts: zero." | Safety card; optionally `/api/audit` |
 | The technology | Server-authoritative NestJS loop, SGP4 orbits, a 60 s straight-line look-ahead with a broad phase, a simple handoff rule. React + Cesium console. | Architecture diagram |
 | The impact | Planes stay out of the "wires", satellites aren't blinded, and the city keeps its power. | Closing slide |
@@ -48,7 +49,7 @@ Everything they avoid is real: live aircraft (OpenSky / adsb.lol) and live satel
 | What if no clean satellite exists? | Hold power until 10 s before contact, ramp to zero over 5 s, and restore when clear. Safety beats delivery. |
 | Why isn't the receiver under the airport approach? | Every beam ends at the receiver, so an aircraft right over it threatens all of them and only throttling helps. Real receivers would sit in a small restricted zone off the approach paths, and ours are sited that way. |
 | How do you know it's safe? | `contacts` counts every tick an object is inside a powered beam. It must stay 0, and the unit tests assert it. |
-| Does it scale? | A bounding-box broad phase runs before the exact test, and the loop is independent per receiver, so it parallelises. Today: 3 receivers × ~170 live satellites + hundreds of aircraft at 1 Hz on a laptop. |
+| Does it scale? | A bounding-box broad phase runs before the exact test, and the loop is independent per receiver, so it parallelises. Measured: about 10,000 satellites take ~40 ms per tick on a laptop, well inside the 1 s loop. |
 | What about the data feeds' limits? | The provider chain falls back between OpenSky and adsb.lol and backs off on rate limits, and satellites are cached for 2 hours. Production would use a licensed feed. |
 | Weather? | Not yet. Clouds block lasers, so a weather layer feeding the handoff rule is next. |
 | Did you use AI? | Yes, as a coding assistant. We can walk through every module and the tests (`npm test`). |
