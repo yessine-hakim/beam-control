@@ -8,7 +8,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableCors({ origin: 'http://localhost:5173' });
   app.enableShutdownHooks();
-  const port = Number(process.env.PORT) || 3000;
+  // Not PORT: dev launchers set PORT for the web app.
+  const port = Number(process.env.SERVER_PORT) || 3000;
   await app.listen(port);
   console.log(`Beam Control server on http://localhost:${port}`);
 }

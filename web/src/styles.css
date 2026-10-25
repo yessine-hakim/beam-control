@@ -1,0 +1,42 @@
+:root {
+  --bg: #070b14;
+  --panel: rgba(9, 14, 24, 0.92);
+  --line: rgba(255, 166, 48, 0.35);
+  --text: #e6edf5;
+  --muted: #9fb0c3;
+  --orange: #ffa630;
+  --orange-soft: #ffcf8a;
+  --red: #ff4d4d;
+  --green: #5ee08a;
+  --cyan: #4dd2ff;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.app {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.globe {
+  position: absolute;
+  inset: 0;
+}
+
+.globe .cesium-viewer-bottom {
+  display: none;
+}

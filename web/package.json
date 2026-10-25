@@ -1,0 +1,28 @@
+{
+  "name": "@beam-control/web",
+  "private": true,
+  "description": "Beam Control web console: globe, beams and operator dashboard",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@cesium/engine": "22.3.0",
+    "@cesium/widgets": "14.3.0",
+    "cesium": "1.138.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "socket.io-client": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "~5.9.3",
+    "vite": "~6.4.3",
+    "vite-plugin-cesium": "1.2.23",
+    "vitest": "~3.2.7"
+  }
+}
