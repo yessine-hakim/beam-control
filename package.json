@@ -1,0 +1,16 @@
+{
+  "name": "beam-control",
+  "private": true,
+  "description": "Beam Control: air traffic control for space-based solar power",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,web -c yellow,cyan \"npm run dev -w server\" \"npm run dev -w web\"",
+    "test": "npm test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.5"
+  }
+}
