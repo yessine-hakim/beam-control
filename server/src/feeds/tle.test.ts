@@ -62,3 +62,26 @@ test('tle cache: fresh cache skips fetch; stale + fetch fail serves stale; nothi
   });
   assert.deepEqual(nothing, { text: '', fromCache: false, error: 'offline' });
 });
+
+test('tle cache remembers a failed download so restarts do not re-ask CelesTrak', async () => {
+  let cache: string | null = null;
+  let ageMs: number | null = null;
+  let fetches = 0;
+  const sources = {
+    readCache: async () => cache,
+    writeCache: async (text: string) => {
+      cache = text;
+      ageMs = 0;
+    },
+    cacheAgeMs: async () => ageMs,
+    fetchText: async () => {
+      fetches++;
+      throw new Error('CelesTrak HTTP 403');
+    },
+  };
+  const first = await loadTle(sources);
+  assert.equal(first.text, '');
+  const second = await loadTle(sources);
+  assert.equal(fetches, 1, 'the second start within 2 h does not fetch again');
+  assert.equal(second.text, '');
+});

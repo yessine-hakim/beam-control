@@ -43,7 +43,8 @@ export async function loadTle({ fetchText, readCache, writeCache, cacheAgeMs, ma
   const age = await cacheAgeMs();
   if (age !== null && age < maxAgeMs) {
     const cached = await readCache();
-    if (cached) return { text: cached, fromCache: true, error: null as string | null };
+    // An empty cache is a remembered failure: wait for the next update window.
+    if (cached !== null) return { text: cached, fromCache: true, error: null as string | null };
   }
   try {
     const text = await fetchText();
@@ -52,6 +53,8 @@ export async function loadTle({ fetchText, readCache, writeCache, cacheAgeMs, ma
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     const stale = await readCache();
-    return stale ? { text: stale, fromCache: true, error: message } : { text: '', fromCache: false, error: message };
+    if (stale) return { text: stale, fromCache: true, error: message };
+    await writeCache('').catch(() => {});
+    return { text: '', fromCache: false, error: message };
   }
 }
