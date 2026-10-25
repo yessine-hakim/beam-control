@@ -22,7 +22,7 @@
 
 - New folder `C:\Users\hakim\Desktop\Lumen\beam-control-app`, fresh `git init`.
 - Never copy any file from the prototype repo except our own `src/layers/beamControl/*` and `beam-control.css`.
-- No mention of the old app's name anywhere in the new repo (code, comments, docs, package metadata, git messages). Verify with `git grep -i "god.s eye\|gods-eye\|bilawal"` → no output.
+- No mention of the old app's name anywhere in the new repo (code, comments, docs, package metadata, git messages). Verify with a case-insensitive `git grep` for the old product and author names → no output.
 - Brand: product name **Beam Control** everywhere. Package names `beam-control` (root), `@beam-control/server`, `@beam-control/web`.
 - Honesty: anything simulated is labelled **SIMULATED** on screen (power satellites `PWR-nn · SIMULATED`, receivers `<name> receiver (SIMULATED)`, drills `DRILL-n (SIMULATED)`, the header badge "SIMULATED POWER CONSTELLATION · LIVE TRAFFIC"). Recorded data is never shown as live.
 - Carried-over constants are unchanged: HORIZON_S 60, STEP_S 1, RAMP_S 5, THROTTLE_LEAD_S 10, MIN_ELEVATION_DEG 15, BEAM_TYPES laser 2000 m / microwave 600 m, constellation 12×8 at 1200 km 53°, RECEIVERS london-west 51.53, −0.30, laser, 200 MW · paris-nord 49.075, 2.68, laser, 150 MW · tunis 36.87, 10.30, microwave, 100 MW.
@@ -333,7 +333,7 @@ test('onLog receives every log entry in log order', () => {
   - the core math, run instructions including `server/.env` for OpenSky, tests, known limitations and next steps (database, roles, multi-operator, weather, flight plans, Moon).
 - Create: `docs/demo-script.md`, adapted from the prototype's script to the new app's click path (Fly to → drill / live feed → log → `/api/audit` for the regulator view).
 
-- [ ] **Step 1:** Write both files. Run `git grep -n -i "god.s eye\|gods-eye\|bilawal"`. Expected: no output.
+- [ ] **Step 1:** Write both files. Run the brand check (case-insensitive `git grep` for the old product and author names). Expected: no output.
 - [ ] **Step 2:** Run `npm test` at the root. Expected: all tests pass in both workspaces.
 - [ ] **Step 3: Commit** `docs: README with architecture, credits and demo script`
 - [ ] **Step 4:** Publish (the user approved these names):
